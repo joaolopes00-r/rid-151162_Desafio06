@@ -1,34 +1,21 @@
-require('dotenv').config();
+require("dotenv").config();
+const app = require("./config/app");
 
-const createApp = require('./config/app');
-const connectMongo = require('./database/mongo');
-const { sequelize, connectMySQL } = require('./database/mysql');
+const { connectMySQL } = require("./database/mysql");
+const { connectMongo } = require("./database/mongo");
 
-require('./models/associations');
+const PORT = process.env.PORT || 3000;
 
-const routes = require('./routes');
+async function start() {
+  await connectMySQL();
+  await connectMongo();
 
-const app = createApp();
-app.use('/api', routes);
-
-async function startServer() {
-  try {
-    console.log("🔄 Conectando bancos...");
-
-    await connectMongo();
-    await connectMySQL();
-    await sequelize.sync({ alter: true });
-
-    console.log("✅ Bancos sincronizados");
-
-    app.listen(process.env.PORT, () => {
-      console.log(`🚀 Servidor rodando na porta ${process.env.PORT}`);
-    });
-
-  } catch (error) {
-    console.error("❌ Erro ao iniciar aplicação:", error);
-    process.exit(1);
-  }
+  app.listen(PORT, () => {
+    console.log(`🚀 Servidor rodando na porta ${PORT}`);
+  });
 }
 
-startServer();
+start().catch((err) => {
+  console.error("❌ Falha ao iniciar o servidor:", err.message);
+  process.exit(1);
+});

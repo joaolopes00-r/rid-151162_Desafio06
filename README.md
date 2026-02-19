@@ -62,3 +62,6 @@ Desafio: Integração e modelagem de dados de um produto digital
 - Cliente 1:N Pedido
 - Pedido 1:1 Venda
 - Pedido N:N Produto (pedido_produtos)
+
+## 🗄️ Diagrama de Dados
+![Diagrama](./docs/diagrama.png)

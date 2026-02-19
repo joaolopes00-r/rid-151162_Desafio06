@@ -1,13 +1,24 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 
-function createApp() {
-  const app = express();
+const app = express();
 
-  app.use(cors());
-  app.use(express.json());
+app.use(cors());
+app.use(express.json());
 
-  return app;
-}
+/* IMPORTANTE: subir um nível (../) */
+const produtoRoutes = require("../routes/produtoRoutes");
+const clienteRoutes = require("../routes/clienteRoutes");
+const pedidoRoutes = require("../routes/pedidoRoutes");
+const estoqueRoutes = require("../routes/estoqueRoutes");
 
-module.exports = createApp;
+app.use("/produtos", produtoRoutes);
+app.use("/clientes", clienteRoutes);
+app.use("/pedidos", pedidoRoutes);
+app.use("/estoque", estoqueRoutes);
+
+app.get("/", (req, res) => {
+  res.send("API DNCommerce funcionando 🚀");
+});
+
+module.exports = app;

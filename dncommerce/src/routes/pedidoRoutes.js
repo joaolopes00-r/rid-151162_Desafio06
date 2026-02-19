@@ -1,8 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const pedidoController = require('../controllers/pedidoController');
+const router = require("express").Router();
+const controller = require("../controllers/pedidoController");
 
-router.post('/', pedidoController.criarPedido);
-router.get('/', pedidoController.listarPedidos);
+router.post("/", controller.criarPedido);
+router.get("/", controller.listarPedidos);
+router.get("/:id", controller.buscarPedido);
+
 
 module.exports = router;
